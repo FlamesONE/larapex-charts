@@ -36,6 +36,8 @@ class LarapexChart
     protected $zoom;
     protected $dataLabels;
     protected $sparkline;
+    protected $theme;
+    protected $background = 'transparent';
     private $chartLetters = 'abcdefghijklmnopqrstuvwxyz';
 
     /*
@@ -49,6 +51,7 @@ class LarapexChart
         $this->id = substr(str_shuffle(str_repeat($x = $this->chartLetters, ceil(25 / strlen($x)))), 1, 25);
         $this->horizontal = json_encode(['horizontal' => false]);
         $this->colors = json_encode(config('larapex-charts.colors'));
+        $this->theme = config('larapex-charts.theme', 'light');
         $this->setXAxis([]);
         $this->grid = json_encode(['show' => false]);
         $this->markers = json_encode(['show' => false]);
@@ -190,9 +193,16 @@ class LarapexChart
         return $this;
     }
 
+
     public function setXAxis(array $categories) :LarapexChart
     {
         $this->xAxis = json_encode($categories);
+        return $this;
+    }
+
+    public function setTheme(string $theme) :LarapexChart
+    {
+        $this->theme = $theme;
         return $this;
     }
 
@@ -317,6 +327,14 @@ class LarapexChart
     }
 
     /**
+     * @return string
+     */
+    public function background()
+    {
+        return $this->background;
+    }
+
+    /**
      * @return mixed
      */
     public function subtitle()
@@ -338,6 +356,14 @@ class LarapexChart
     public function type()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function theme()
+    {
+        return $this->theme;
     }
 
 	/**
@@ -478,6 +504,7 @@ class LarapexChart
                 'type' => $this->type(),
                 'height' => $this->height(),
                 'width' => $this->width(),
+                'background' => $this->background(),
                 'toolbar' => json_decode($this->toolbar()),
                 'zoom' => json_decode($this->zoom()),
                 'fontFamily' => json_decode($this->fontFamily()),
@@ -502,6 +529,7 @@ class LarapexChart
             ],
             'grid' => json_decode($this->grid()),
             'markers' => json_decode($this->markers()),
+            'theme' => $this->theme()
         ];
 
         if($this->labels()) {
@@ -523,6 +551,7 @@ class LarapexChart
         $options = [
             'chart' => [
                 'height' => $this->height(),
+                'background' => $this->background(),
                 'toolbar' => json_decode($this->toolbar()),
                 'zoom' => json_decode($this->zoom()),
                 'fontFamily' => json_decode($this->fontFamily()),
@@ -546,6 +575,7 @@ class LarapexChart
             ],
             'grid' => json_decode($this->grid()),
             'markers' => json_decode($this->markers()),
+            'theme' => $this->theme()
         ];
 
         if($this->labels()) {

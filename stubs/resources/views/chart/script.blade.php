@@ -1,9 +1,13 @@
 <script>
     var options =
     {
+        theme: {
+            mode: '{!! $chart->theme() !!}'
+        },
         chart: {
             type: '{!! $chart->type() !!}',
             height: {!! $chart->height() !!},
+            background: '{!! $chart->background() !!}',
             width: '{!! $chart->width() !!}',
             toolbar: {!! $chart->toolbar() !!},
             zoom: {!! $chart->zoom() !!},
