@@ -193,6 +193,11 @@ class LarapexChart
         return $this;
     }
 
+    public function setBackground(string $background) :LarapexChart
+    {
+        $this->background = $background;
+        return $this;
+    }
 
     public function setXAxis(array $categories) :LarapexChart
     {
